@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <a href="home-page.html" class="home-link">← Back to Home</a>
+    </header>
+    <div class="container-wrapper">
+        <!-- First Converter: Real Money to Fantasy Currency -->
+        <div class="container">
+            <h1>Money Converter</h1>
+            <p>Enter the amount in your currency to convert it into gold, silver, and copper:</p>
+            <label for="currency">Select Currency:</label>
+            <select id="currency">
+                <option value="1">USD</option>
+                <option value="0.85">EUR</option>
+                <option value="0.75">GBP</option>
+                <option value="110">JPY</option>
+                <option value="1.3">AUD</option>
+                <option value="1.25">CAD</option>
+            </select>
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" placeholder="Enter amount">
+            <button onclick="convertMoney()">Convert</button>
+            <p class="result">Gold: <span id="goldResult">0</span></p>
+            <p class="result">Silver: <span id="silverResult">0</span></p>
+            <p class="result">Copper: <span id="copperResult">0</span></p>
+        </div>
+
+        <!-- Second Converter: Fantasy Currency to Real Money -->
+        <div class="container">
+            <h1>Fantasy to Real Money</h1>
+            <p>Enter your fantasy currency to convert it into real money:</p>
+            <label for="gold">Gold:</label>
+            <input type="number" id="gold" placeholder="Enter gold">
+            <label for="silver">Silver:</label>
+            <input type="number" id="silver" placeholder="Enter silver">
+            <label for="copper">Copper:</label>
+            <input type="number" id="copper" placeholder="Enter copper">
+            <label for="realCurrency">Select Currency:</label>
+            <select id="realCurrency">
+                <option value="1" data-symbol="$">USD</option>
+                <option value="0.85" data-symbol="€">EUR</option>
+                <option value="0.75" data-symbol="£">GBP</option>
+                <option value="110" data-symbol="¥">JPY</option>
+                <option value="1.3" data-symbol="A$">AUD</option>
+                <option value="1.25" data-symbol="C$">CAD</option>
+            </select>
+            <button onclick="convertFantasyToReal()">Convert</button>
+            <p class="result" id="fantasyResult"></p>
+        </div>
+    </div>
+
+    <script>
+        function animateNumber(element, start, end, duration) {
+            const range = end - start;
+            const increment = range / (duration / 10); // Update every 10ms
+            let current = start;
+
+            const interval = setInterval(() => {
+                current += increment;
+                if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+                    current = end; // Ensure the final value is exact
+                    clearInterval(interval);
+                }
+                element.textContent = current.toFixed(2); // Update the element's text
+            }, 10);
+        }
+
+        function convertMoney() {
+            const currencyRate = parseFloat(document.getElementById('currency').value);
+            const amount = parseFloat(document.getElementById('amount').value);
+            const goldResult = document.getElementById('goldResult');
+            const silverResult = document.getElementById('silverResult');
+            const copperResult = document.getElementById('copperResult');
+
+            if (isNaN(amount) || amount <= 0) {
+                goldResult.textContent = '0';
+                silverResult.textContent = '0';
+                copperResult.textContent = '0';
+                return;
+            }
+
+            // Convert to USD
+            const usd = amount / currencyRate;
+
+            // Conversion to fantasy currency
+            const totalCopper = Math.floor(usd * 100); // 1 USD = 100 copper
+            const gold = Math.floor(totalCopper / 10000); // 100 silver = 1 gold
+            const remainingCopperAfterGold = totalCopper % 10000;
+            const silver = Math.floor(remainingCopperAfterGold / 100); // 100 copper = 1 silver
+            const copper = remainingCopperAfterGold % 100;
+
+            // Animate the results
+            animateNumber(goldResult, 0, gold, 1000); // Animate gold
+            animateNumber(silverResult, 0, silver, 1000); // Animate silver
+            animateNumber(copperResult, 0, copper, 1000); // Animate copper
+        }
+
+        function convertFantasyToReal() {
+            const gold = parseInt(document.getElementById('gold').value) || 0;
+            const silver = parseInt(document.getElementById('silver').value) || 0;
+            const copper = parseInt(document.getElementById('copper').value) || 0;
+            const realCurrency = document.getElementById('realCurrency');
+            const realCurrencyRate = parseFloat(realCurrency.value);
+            const currencySymbol = realCurrency.options[realCurrency.selectedIndex].dataset.symbol;
+            const resultElement = document.getElementById('fantasyResult');
+
+            if (isNaN(realCurrencyRate) || realCurrencyRate <= 0) {
+                resultElement.textContent = 'Please select a valid currency.';
+                return;
+            }
+
+            // Convert fantasy currency to total copper
+            const totalCopper = (gold * 10000) + (silver * 100) + copper;
+
+            // Convert copper to USD
+            const usd = totalCopper / 100;
+
+            // Convert USD to selected real-world currency
+            const realMoney = usd * realCurrencyRate;
+
+            // Animate the result with the currency symbol
+            animateNumber(resultElement, 0, realMoney, 2000);
+            setTimeout(() => {
+                resultElement.textContent = `${currencySymbol}${realMoney.toFixed(2)}`;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
