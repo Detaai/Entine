@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fantasy Language Translator</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="translations/randeth.js" defer></script>
+    <script src="translator.js" defer></script>
 </head>
 <body>
     <header>
-        <a href="home-page.html" class="home-link">← Back to Home</a>
+        <a href="home-page.html" class="home-link">&larr; Back to Home</a>
     </header>
-
+    
     <div class="container">
         <h1>Fantasy Language Translator</h1>
         
@@ -20,109 +22,13 @@
             <option value="wander" disabled>Wander's Language (Unavailable)</option>
             <option value="merspeak" disabled>Merspeak (Unavailable)</option>
         </select>
-
+        
         <label for="text">Enter Text:</label>
         <input type="text" id="text" placeholder="Enter words to translate">
-
+        
         <button onclick="translateText()">Translate</button>
-
+        
         <div class="result" id="result"></div>
     </div>
-
-    <script>
-        function translateText() {
-            const textElement = document.getElementById('text');
-            const text = textElement && textElement.value ? textElement.value.trim() : null;
-            let result = "";
-
-            if (!text) {
-                document.getElementById('result').innerHTML = "Please enter text.";
-                return; // Exit the function if no text is entered
-            }
-
-            const fantasyType = document.getElementById('fantasy-type').value;
-            if (fantasyType === "randeth") {
-                result = translateToCustomLanguage(text);
-            } else {
-                result = "This language is currently unavailable.";
-            }
-
-            document.getElementById('result').innerHTML = `Translation: ${result}`;
-        }
-
-        function translateToCustomLanguage(input) {
-    const combos = {
-        "AN": "SHU", "ED": "VY", "EE": "RG", "EN": "NINI", "ER": "NAPA", 
-        "ES": "UY", "FF": "HK", "HE": "DC", "ING": "WEF", "IN": "MOMO", 
-        "LL": "GH", "ND": "TEFA", "NE": "FRW", "NT": "FHS", "ON": "FHK", 
-        "OO": "MB", "OR": "SOCK", "RE": "WET", "SE": "FHS", "SS": "VNC", 
-        "ST": "RY", "TE": "HAHA", "TH": "BOGO", "TR": "NFG", "TO": "CN", 
-        "VE": "BIT"
-    };
-
-    const letters = {
-        "A": "VEH", "B": "SHE", "C": "MI", "D": "TI", "E": "TE", "F": "FI", 
-        "G": "SHI", "H": "FLI", "I": "FLU", "J": "FLE", "K": "CIN", "L": "TII", 
-        "M": "MA", "N": "ME", "O": "VO", "P": "LI", "Q": "WOO", "R": "SIT", 
-        "S": "UTA", "T": "MAS", "U": "GAN", "V": "KI", "W": "DE", "X": "SU", 
-        "Y": "KA", "Z": "POO"
-    };
-
-    input = input.toUpperCase();
-
-    // Step 1: Replace all letter combinations and mark them
-    let comboReplaced = input;
-    for (const [combo, replacement] of Object.entries(combos)) {
-        const regex = new RegExp(combo, 'g');
-        comboReplaced = comboReplaced.replace(regex, `{${replacement}}`);
-    }
-    console.log("After combo replacements:", comboReplaced);
-
-    // Step 2: Replace single letters only outside the marked brackets
-    let finalResult = "";
-    let insideCombo = false;
-
-    for (let i = 0; i < comboReplaced.length; i++) {
-        const char = comboReplaced[i];
-
-        if (char === "{") {
-            insideCombo = true;
-            finalResult += char;
-        } else if (char === "}") {
-            insideCombo = false;
-            finalResult += char;
-        } else if (!insideCombo && letters[char]) {
-            finalResult += letters[char];
-        } else {
-            finalResult += char;
-        }
-    }
-    
-    // Remove the markers
-    finalResult = finalResult.replace(/{|}/g, "");
-    console.log("After letter replacements:", finalResult);
-
-    // Step 3: Apply suffix rules
-    finalResult = applySuffixes(finalResult);
-    console.log("After applying suffixes:", finalResult);
-
-    return finalResult;
-}
-    
-        // Function to apply suffix rules based on word structure
-        // This is a placeholder function; you can customize the rules as needed
-
-        function applySuffixes(word) {
-            // Apply suffix rules based on word structure
-            if (word.endsWith("T")) {
-                word += "MAS"; // Example: Add "MAS" for words ending in "T"
-            }
-            if (word.endsWith("E")) {
-                word += "TE"; // Example: Add "TE" for words ending in "E"
-            }
-            // Add more rules as needed
-            return word;
-        }
-    </script>
 </body>
 </html>
