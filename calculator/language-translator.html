@@ -31,12 +31,13 @@
 
     <script>
         function translateText() {
-            const text = document.getElementById('text').value.trim();
+            const textElement = document.getElementById('text');
+            const text = textElement && textElement.value ? textElement.value.trim() : null;
             let result = "";
 
-            if (text === "") {
+            if (!text) {
                 document.getElementById('result').innerHTML = "Please enter text.";
-                return;
+                return; // Exit the function if no text is entered
             }
 
             const fantasyType = document.getElementById('fantasy-type').value;
@@ -50,49 +51,74 @@
         }
 
         function translateToCustomLanguage(input) {
-            // Define the letter combinations and their translations
-            const combos = {
-                "AN": "SHU", "ED": "VY", "EE": "RG", "EN": "NINI", "ER": "NAPA", 
-                "ES": "UY", "FF": "HK", "HE": "DC", "ING": "WEF", "IN": "MOMO", 
-                "LL": "GH", "ND": "TEFA", "NE": "FRW", "NT": "FHS", "ON": "FHK", 
-                "OO": "MB", "OR": "SOCK", "RE": "WET", "SE": "FHS", "SS": "VNC", 
-                "ST": "RY", "TE": "HAHA", "TH": "BOGO", "TR": "NFG", "TO": "CN", 
-                "VE": "BIT"
-            };
+    const combos = {
+        "AN": "SHU", "ED": "VY", "EE": "RG", "EN": "NINI", "ER": "NAPA", 
+        "ES": "UY", "FF": "HK", "HE": "DC", "ING": "WEF", "IN": "MOMO", 
+        "LL": "GH", "ND": "TEFA", "NE": "FRW", "NT": "FHS", "ON": "FHK", 
+        "OO": "MB", "OR": "SOCK", "RE": "WET", "SE": "FHS", "SS": "VNC", 
+        "ST": "RY", "TE": "HAHA", "TH": "BOGO", "TR": "NFG", "TO": "CN", 
+        "VE": "BIT"
+    };
 
-            // Define the individual letters and their translations
-            const letters = {
-                "A": "VEH", "B": "SHE", "C": "MI", "D": "TI", "E": "TE", "F": "FI", 
-                "G": "SHI", "H": "FLI", "I": "FLU", "J": "FLE", "K": "CIN", "L": "TII", 
-                "M": "MA", "N": "ME", "O": "VO", "P": "LI", "Q": "WOO", "R": "SIT", 
-                "S": "UTA", "T": "MAS", "U": "GAN", "V": "KI", "W": "DE", "X": "SU", 
-                "Y": "KA", "Z": "POO"
-            };
+    const letters = {
+        "A": "VEH", "B": "SHE", "C": "MI", "D": "TI", "E": "TE", "F": "FI", 
+        "G": "SHI", "H": "FLI", "I": "FLU", "J": "FLE", "K": "CIN", "L": "TII", 
+        "M": "MA", "N": "ME", "O": "VO", "P": "LI", "Q": "WOO", "R": "SIT", 
+        "S": "UTA", "T": "MAS", "U": "GAN", "V": "KI", "W": "DE", "X": "SU", 
+        "Y": "KA", "Z": "POO"
+    };
 
-            // Make input lowercase for easier processing
-            input = input.toLowerCase();
+    input = input.toUpperCase();
 
-            // First, replace all letter combinations
-            for (let combo in combos) {
-                const regex = new RegExp(combo, 'g');
-                input = input.replace(regex, combos[combo]);
-            }
+    // Step 1: Replace all letter combinations and mark them
+    let comboReplaced = input;
+    for (const [combo, replacement] of Object.entries(combos)) {
+        const regex = new RegExp(combo, 'g');
+        comboReplaced = comboReplaced.replace(regex, `{${replacement}}`);
+    }
+    console.log("After combo replacements:", comboReplaced);
 
-            // Now handle affix rules
-            input = applySuffixes(input);
+    // Step 2: Replace single letters only outside the marked brackets
+    let finalResult = "";
+    let insideCombo = false;
 
-            // Then, replace single letters
-            input = input.split('').map(char => {
-                return letters[char.toUpperCase()] || char;
-            }).join('');
+    for (let i = 0; i < comboReplaced.length; i++) {
+        const char = comboReplaced[i];
 
-            return input;
+        if (char === "{") {
+            insideCombo = true;
+            finalResult += char;
+        } else if (char === "}") {
+            insideCombo = false;
+            finalResult += char;
+        } else if (!insideCombo && letters[char]) {
+            finalResult += letters[char];
+        } else {
+            finalResult += char;
         }
+    }
+    
+    // Remove the markers
+    finalResult = finalResult.replace(/{|}/g, "");
+    console.log("After letter replacements:", finalResult);
+
+    // Step 3: Apply suffix rules
+    finalResult = applySuffixes(finalResult);
+    console.log("After applying suffixes:", finalResult);
+
+    return finalResult;
+}
+    
+        // Function to apply suffix rules based on word structure
+        // This is a placeholder function; you can customize the rules as needed
 
         function applySuffixes(word) {
             // Apply suffix rules based on word structure
-            if (word.endsWith("t")) {
-                word += "MAS"; // Example: Add "MAS" for words ending in "t"
+            if (word.endsWith("T")) {
+                word += "MAS"; // Example: Add "MAS" for words ending in "T"
+            }
+            if (word.endsWith("E")) {
+                word += "TE"; // Example: Add "TE" for words ending in "E"
             }
             // Add more rules as needed
             return word;
