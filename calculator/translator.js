@@ -23,41 +23,73 @@ function translateToCustomLanguage(input, language) {
 
     // Convert input to uppercase
     input = input.toUpperCase();
+    console.log("Input after converting to uppercase:", input);
 
-    // Step 1: Replace all combos and mark them with {}
+    // Step 1: Replace priority combos first (EN, ND, VE)
+    const priorityCombos = ["EN", "ND", "VE"];
     let comboReplaced = input;
-    Object.entries(combos).forEach(([combo, replacement]) => {
+
+    // Log the input before replacing priority combos
+    console.log("Before priority combo replacements:", comboReplaced);
+
+    // Replace priority combos first
+    priorityCombos.forEach(combo => {
         const regex = new RegExp(combo, 'g');
-        // Wrap replacements in {}
+        if (combos[combo]) {
+            comboReplaced = comboReplaced.replace(regex, `{${combos[combo]}}`);
+        }
+    });
+
+    // Log after replacing priority combos
+    console.log("After priority combo replacements:", comboReplaced);
+
+    // Step 2: Replace all other combos (non-priority) using the same process
+    const sortedCombos = Object.entries(combos)
+        .filter(([combo]) => !priorityCombos.includes(combo)) // Skip priority combos
+        .sort((a, b) => b[0].length - a[0].length); // Sort by length (longest first)
+
+    console.log("Combos to replace (sorted by length):", sortedCombos);
+
+    // Replace the non-priority combos
+    sortedCombos.forEach(([combo, replacement]) => {
+        const regex = new RegExp(combo, 'g');
         comboReplaced = comboReplaced.replace(regex, `{${replacement}}`);
     });
-    console.log("After combo replacements:", comboReplaced);
 
-    // Step 2: Replace single letters only outside the marked {} combos
+    // Log after all combo replacements
+    console.log("After all combo replacements:", comboReplaced);
+
+    // Step 3: Replace single letters outside the marked brackets
     let finalResult = "";
-    let insideCombo = false; // Flag to track whether we're inside a combo
+    let insideCombo = false;
+
+    console.log("Starting letter replacements...");
 
     for (let i = 0; i < comboReplaced.length; i++) {
         const char = comboReplaced[i];
 
+        // Handle entering and exiting a combo
         if (char === "{") {
-            insideCombo = true; // We're inside a combo replacement
+            insideCombo = true;
             finalResult += char;
         } else if (char === "}") {
-            insideCombo = false; // We're exiting the combo replacement
+            insideCombo = false;
             finalResult += char;
         } else if (!insideCombo && letters[char]) {
-            finalResult += letters[char]; // Replace letter if not inside a combo
+            finalResult += letters[char]; // Replace letter if it's outside of a combo
         } else {
-            finalResult += char; // Add original char if it's not a letter to replace
+            finalResult += char; // Add the character as is if it's not a letter to replace
         }
     }
 
-    // Step 3: Clean up the {} markers
-    finalResult = finalResult.replace(/{|}/g, "");
+    // Log after letter replacements
     console.log("After letter replacements:", finalResult);
 
-    // Step 4: Apply suffix rules if needed
+    // Step 4: Clean up the {} markers that were used to mark combos
+    finalResult = finalResult.replace(/{|}/g, "");
+    console.log("After removing markers:", finalResult);
+
+    // Step 5: Apply suffix rules if necessary
     finalResult = applySuffixes(finalResult);
     console.log("After applying suffixes:", finalResult);
 
