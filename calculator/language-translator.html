@@ -5,8 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fantasy Language Translator</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="translations/randeth.js" defer></script>
-    <script src="translator.js" defer></script>
+    <script src="translator.js" defer></script> <!-- Default Translator logic -->
+    <script src="reverse-translator.js" defer></script> <!-- Reverse Translator logic -->
+    <style>
+        /* Add styles for the scrollable result box */
+        .result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            max-height: 200px; /* Set a fixed height */
+            overflow-y: auto; /* Enable vertical scrolling */
+            font-family: Arial, sans-serif;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        /* Style for the Swap button */
+        .swap-button {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .swap-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -19,8 +51,12 @@
         <label for="fantasy-type">Choose Fantasy Language:</label>
         <select id="fantasy-type">
             <option value="randeth">Randeth Language</option>
+            <option value="randeth-writting">Randeth Written (Make sure to copy the speech text)</option>
             <option value="wander" disabled>Wander's Language (Unavailable)</option>
             <option value="merspeak" disabled>Merspeak (Unavailable)</option>
+            <option value="entian" disabled>Entian Language (Unavailable)</option>
+            <option value="deepspeech">Deepspeech (Forbidden)</option>
+            <option value="dwarvish">Dwarvish (Forbidden)</option>
         </select>
         
         <label for="text">Enter Text:</label>
@@ -29,6 +65,67 @@
         <button onclick="translateText()">Translate</button>
         
         <div class="result" id="result"></div>
+
+        <!-- Swap Button -->
+        <button class="swap-button" onclick="swapToSecondTranslator()">Swap</button>
     </div>
+
+    <script>
+        async function translateText() {
+            const textElement = document.getElementById('text');
+            const text = textElement && textElement.value ? textElement.value.trim() : null;
+            const resultElement = document.getElementById('result');
+            const fantasyType = document.getElementById('fantasy-type').value;
+
+            if (!text) {
+                resultElement.innerHTML = `
+                    <strong>Error #1:</strong> No text entered.<br>
+                    <em>Reference:</em> See <code>errors</code> file for details.
+                `;
+                return; // Exit the function if no text is entered
+            }
+
+            try {
+                if (fantasyType.includes("to-english")) {
+                    console.log(`Using reverse-translator.js for ${fantasyType}`);
+                    await reverseTranslateText(fantasyType, text, resultElement);
+                } else {
+                    console.log(`Using translator.js for ${fantasyType}`);
+                    await normalTranslateText(fantasyType, text, resultElement);
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                resultElement.innerHTML = `
+                    <strong>Error #2:</strong> ${error.message}<br>
+                    <em>Reference:</em> See <code>errors</code> file for details.
+                `;
+            }
+        }
+
+        async function normalTranslateText(fantasyType, text, resultElement) {
+            const response = await fetch(`translations/${fantasyType}.json`);
+            if (!response.ok) {
+                throw new Error(`Failed to load translation file for ${fantasyType}: ${response.statusText}`);
+            }
+            const translationData = await response.json();
+            const translatedText = translateToCustomLanguage(text, translationData);
+            resultElement.innerHTML = translatedText;
+        }
+
+        async function reverseTranslateText(fantasyType, text, resultElement) {
+            const response = await fetch(`reverse-translations/${fantasyType}.json`); // Fetch from reverse-translations folder
+            if (!response.ok) {
+                throw new Error(`Failed to load reverse translation file for ${fantasyType}: ${response.statusText}`);
+            }
+            const translationData = await response.json();
+            const translatedText = reverseTranslateToEnglish(text, translationData);
+            resultElement.innerHTML = translatedText;
+        }
+
+        // Function to swap to the second translator
+        function swapToSecondTranslator() {
+            window.location.href = "language-translator-two.html"; // Redirect to the second translator
+        }
+    </script>
 </body>
 </html>
