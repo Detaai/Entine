@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Name Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <a href="home-page.html" class="home-link">← Back to Home</a>
+    </header>
+
+    <div class="container">
+        <h1>Random Name Generator</h1>
+
+        <label for="language">Choose Language:</label>
+        <select id="language">
+            <option value="random">Random Fantasy Language</option>
+            <option value="randeth">Randeth Language</option>
+        </select>
+
+        <button onclick="generateName()">Generate Name</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function generateName() {
+            const language = document.getElementById('language').value;
+            let name = "";
+            let meaning = "";
+
+            // Get a random word as the base for the name
+            const randomWord = getRandomWord();
+            meaning = randomWord;
+
+            // Generate the name based on the selected language
+            if (language === "random") {
+                name = generateFantasyName(randomWord);
+            } else if (language === "randeth") {
+                name = generateRandethName(randomWord);
+            }
+
+            // Display the generated name and its meaning
+            document.getElementById('result').innerHTML = `
+                <p><strong>Generated Name:</strong> ${name}</p>
+                <p><strong>Meaning:</strong> ${meaning}</p>
+            `;
+        }
+
+        function getRandomWord() {
+            // List of simple English words to use as the base for names
+            const words = ["fire", "water", "earth", "wind", "light", "shadow", "star", "moon", "sun", "sky"];
+            return words[Math.floor(Math.random() * words.length)];
+        }
+
+        function generateFantasyName(word) {
+            const consonants = "ktgrmlnshdpz";
+            const vowels = "aeiou";
+            let name = "";
+
+            // Generate a name based on the length of the word
+            for (let i = 0; i < word.length; i++) {
+                if (Math.random() > 0.5) {
+                    name += consonants[Math.floor(Math.random() * consonants.length)];
+                } else {
+                    name += vowels[Math.floor(Math.random() * vowels.length)];
+                }
+            }
+
+            // Capitalize the first letter
+            return name.charAt(0).toUpperCase() + name.slice(1);
+        }
+
+        function generateRandethName(word) {
+            const combos = {
+                "AN": "SHU", "ED": "VY", "EE": "RG", "EN": "NINI", "ER": "NAPA", 
+                "ES": "UY", "FF": "HK", "HE": "DC", "ING": "WEF", "IN": "MOMO", 
+                "LL": "GH", "ND": "TEFA", "NE": "FRW", "NT": "FHS", "ON": "FHK", 
+                "OO": "MB", "OR": "SOCK", "RE": "WET", "SE": "FHS", "SS": "VNC", 
+                "ST": "RY", "TE": "HAHA", "TH": "BOGO", "TR": "NFG", "TO": "CN", 
+                "VE": "BIT"
+            };
+
+            const letters = {
+                "A": "VEH", "B": "SHE", "C": "MI", "D": "TI", "E": "TE", "F": "FI", 
+                "G": "SHI", "H": "FLI", "I": "FLU", "J": "FLE", "K": "CIN", "L": "TII", 
+                "M": "MA", "N": "ME", "O": "VO", "P": "LI", "Q": "WOO", "R": "SIT", 
+                "S": "UTA", "T": "MAS", "U": "GAN", "V": "KI", "W": "DE", "X": "SU", 
+                "Y": "KA", "Z": "POO"
+            };
+
+            // Transform the word into a Randeth name
+            let transformedName = word.toUpperCase();
+
+            // Replace combos
+            for (let combo in combos) {
+                const regex = new RegExp(combo, 'g');
+                transformedName = transformedName.replace(regex, combos[combo]);
+            }
+
+            // Replace individual letters
+            transformedName = transformedName.split('').map(char => {
+                return letters[char] || char;
+            }).join('');
+
+            // Capitalize the first letter
+            return transformedName.charAt(0).toUpperCase() + transformedName.slice(1).toLowerCase();
+        }
+    </script>
+</body>
+</html>

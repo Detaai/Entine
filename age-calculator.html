@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy Age Converter</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .hidden {
+            display: none;
+        }
+        .swap-line a {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .swap-line a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="home-page.html" class="home-link">&larr; Back to Home</a>
+    </header>
+    <div class="container-wrapper">
+        <!-- Fantasy to Human Age Converter -->
+        <div class="container" id="fantasyToHuman">
+            <h2>Fantasy to Human Age</h2>
+            <label for="species">Choose Species:</label>
+            <select id="species">
+                <option value="human">Human</option>
+                <option value="half-elf">Half-Elf</option>
+                <option value="randine">Randine</option>
+                <option value="entith">Entith</option>
+                <option value="dwarf">Dwarf</option>
+                <option value="fae">Fae</option>
+                <option value="randeth">Randeth</option>
+                <option value="entian">Entian</option>
+                <option value="demon">Demon</option>
+            </select>
+
+            <label for="age">Enter Creature's Age:</label>
+            <input type="number" id="age" placeholder="Enter age in years">
+
+            <button onclick="convertFantasyToHuman()">Convert to Human Equivalent</button>
+
+            <div class="result" id="fantasyToHumanResult"></div>
+
+            <!-- Swap Line -->
+            <p class="swap-line">
+                <a href="#" onclick="toggleConverters()">Swap to Human to Fantasy Age</a>
+            </p>
+        </div>
+
+        <!-- Human to Fantasy Age Converter -->
+        <div class="container hidden" id="humanToFantasy">
+            <h2>Human to Fantasy Age</h2>
+            <label for="fantasySpecies">Choose Fantasy Species:</label>
+            <select id="fantasySpecies">
+                <option value="human">Human</option>
+                <option value="half-elf">Half-Elf</option>
+                <option value="randine">Randine</option>
+                <option value="entith">Entith</option>
+                <option value="dwarf">Dwarf</option>
+                <option value="fae">Fae</option>
+                <option value="randeth">Randeth</option>
+                <option value="entian">Entian</option>
+                <option value="demon">Demon</option>
+            </select>
+
+            <label for="humanAge">Enter Human Age:</label>
+            <input type="number" id="humanAge" placeholder="Enter human age in years">
+
+            <button onclick="convertHumanToFantasy()">Convert to Fantasy Equivalent</button>
+
+            <div class="result" id="humanToFantasyResult"></div>
+
+            <!-- Swap Line -->
+            <p class="swap-line">
+                <a href="#" onclick="toggleConverters()">Swap to Fantasy to Human Age</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function convertFantasyToHuman() {
+            const species = document.getElementById('species').value;
+            const age = parseFloat(document.getElementById('age').value);
+
+            if (isNaN(age) || age <= 0) {
+                document.getElementById('fantasyToHumanResult').innerHTML = `
+                    <strong>Error #5:</strong> Invalid age entered.<br>
+                    <em>Reference:</em> See <code>errors</code> file for details.
+                `;
+                return;
+            }
+
+            let humanAge;
+
+            if (species === 'randeth') {
+                if (age <= 700) {
+                    humanAge = (age * 18) / 700; // Corrected formula for the first phase
+                } else if (age <= 2000) {
+                    humanAge = (age * 35) / 2000; // Corrected formula for the second phase
+                } else {
+                    humanAge = (age * 80) / 10000; // Corrected formula for the third phase
+                }
+            } else {
+                let Y1, M1, Y2, M2, maxAge;
+                switch (species) {
+                    case 'human': Y1 = 18; M1 = 1; Y2 = 18; M2 = 1; maxAge = 80; break;
+                    case 'half-elf':
+                    case 'randine':
+                    case 'entith': Y1 = 20; M1 = 1; Y2 = 20; M2 = 0.4; maxAge = 950; break;
+                    case 'dwarf': Y1 = 20; M1 = 1; Y2 = 20; M2 = 0.2; maxAge = 1000; break;
+                    case 'fae': Y1 = 30; M1 = 1; Y2 = 50; M2 = 0.032; maxAge = 2500; break;
+                    case 'entian': Y1 = 10; M1 = 2; Y2 = 10; M2 = 2; maxAge = Infinity; break;
+                    case 'demon': Y1 = 18; M1 = 1; Y2 = 18; M2 = 1; maxAge = Infinity; break;
+                    default: Y1 = 18; M1 = 1; Y2 = 18; M2 = 1; maxAge = 80;
+                }
+                if (age >= maxAge) {
+                    document.getElementById('fantasyToHumanResult').innerHTML = "💀 Dead";
+                    return;
+                }
+                humanAge = age <= Y1 ? age * M1 : (Y1 * M1) + ((age - Y1) * M2);
+            }
+            document.getElementById('fantasyToHumanResult').innerHTML = `Human Equivalent Age: ${humanAge.toFixed(2)} years`;
+        }
+
+        function convertHumanToFantasy() {
+            const species = document.getElementById('fantasySpecies').value;
+            const humanAge = parseFloat(document.getElementById('humanAge').value);
+            let fantasyAge;
+
+            if (isNaN(humanAge) || humanAge <= 0) {
+                document.getElementById('humanToFantasyResult').innerHTML = "Please enter a valid human age.";
+                return;
+            }
+
+            if (species === 'randeth') {
+                if (humanAge <= 18) {
+                    fantasyAge = (700 / 18) * humanAge;
+                } else if (humanAge <= 35) {
+                    fantasyAge = (2000 / 35) * humanAge;
+                } else {
+                    fantasyAge = (10000 / 80) * humanAge;
+                }
+            } else {
+                let Y1, M1, Y2, M2;
+                switch (species) {
+                    case 'human': Y1 = 18; M1 = 1; Y2 = 18; M2 = 1; break;
+                    case 'half-elf':
+                    case 'randine':
+                    case 'entith': Y1 = 20; M1 = 1; Y2 = 20; M2 = 0.4; break;
+                    case 'dwarf': Y1 = 20; M1 = 1; Y2 = 20; M2 = 0.2; break;
+                    case 'fae': Y1 = 30; M1 = 1; Y2 = 50; M2 = 0.032; break;
+                    case 'entian': Y1 = 10; M1 = 2; Y2 = 10; M2 = 2; break;
+                    case 'demon': Y1 = 18; M1 = 1; Y2 = 18; M2 = 1; break;
+                }
+                fantasyAge = humanAge <= Y1 * M1 ? humanAge / M1 : Y1 + ((humanAge - Y1 * M1) / M2);
+            }
+            document.getElementById('humanToFantasyResult').innerHTML = `Fantasy Equivalent Age: ${fantasyAge.toFixed(2)} years`;
+        }
+
+        function toggleConverters() {
+            const fantasyToHumanContainer = document.getElementById('fantasyToHuman');
+            const humanToFantasyContainer = document.getElementById('humanToFantasy');
+            fantasyToHumanContainer.classList.toggle('hidden');
+            humanToFantasyContainer.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

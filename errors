@@ -1,0 +1,91 @@
+1. Error: No text entered.
+   - Description: The user clicked "Translate" without entering any text.
+   - How to fix: Ensure the input field is not empty before clicking "Translate."
+
+2. Error: Failed to load translation file for <language>. File not found or invalid.
+   - Description: The JSON file for the selected language is missing or cannot be loaded.
+   - How to fix: Ensure the file exists in the `translations` folder and is named correctly (e.g., `randeth.json`).
+
+3. Error: Failed to load reverse translation file for <language>. File not found or invalid.
+   - Description: The JSON file for the reverse translation is missing or cannot be loaded.
+   - How to fix: Ensure the file exists in the `reverse-translations` folder and is named correctly (e.g., `randeth-to-english.json`).
+
+4. Error: Invalid amount entered.
+   - Description: The user entered an invalid or negative amount in the money converter.
+   - How to fix: Enter a positive number in the input field.
+
+5. Error: Invalid age entered.
+   - Description: The user entered an invalid or negative age in the age converter.
+   - How to fix: Enter a positive number in the input field.
+
+6. Error: Internal conflict generated.
+   - Description: The same faction was selected for both sides in the conflict generator.
+   - How to fix: No action needed. The application now generates an internal conflict instead of requiring different factions.
+
+7. Error: Unexpected token < in JSON at position 0.
+   - Description: The JSON file is invalid or contains syntax errors.
+   - How to fix: Validate the JSON file using an online JSON validator (e.g., https://jsonlint.com/) and fix any syntax errors.
+
+8. Error: HTTP Status 404 Not Found.
+   - Description: The requested JSON file could not be found on the server.
+   - How to fix: Verify the file path and ensure the file exists in the correct folder.
+
+9. Error: HTTP Status 500 Internal Server Error.
+   - Description: The server encountered an error while processing the request.
+   - How to fix: Check the server logs for more details and ensure the server is configured correctly.
+
+10. Error: Failed to fetch.
+    - Description: The application could not fetch the JSON file due to a network issue.
+    - How to fix: Ensure the server is running and accessible. Check your internet connection if the server is remote.
+
+11. Error: Translation data is undefined or null.
+    - Description: The JSON file was loaded, but it does not contain valid translation data.
+    - How to fix: Ensure the JSON file contains valid `combos`, `letters`, and `suffixes` objects.
+
+12. Error: No translation found for character "<character>".
+    - Description: A character in the input text does not have a corresponding translation in the JSON file.
+    - How to fix: Add the missing character to the `letters` object in the JSON file.
+
+13. Error: Suffix rule "<suffix>" not applied.
+    - Description: A suffix rule was expected but not applied to the input text.
+    - How to fix: Verify the `suffixes` object in the JSON file and ensure the rule is defined correctly.
+
+14. Error: Reverse translation logic not triggered.
+    - Description: The application did not switch to `reverse-translator.js` for a "To English" option.
+    - How to fix: Ensure the `translateText` function correctly identifies "To English" options and calls `reverseTranslateText`.
+
+15. Error: Normal translation logic not triggered.
+    - Description: The application did not switch to `translator.js` for a normal translation option.
+    - How to fix: Ensure the `translateText` function correctly identifies normal translation options and calls `normalTranslateText`.
+
+16. Error: Swap button not working.
+    - Description: Clicking the "Swap" button does not redirect to the other translator.
+    - How to fix: Verify the `swapToSecondTranslator` or `swapToFirstTranslator` function and ensure the `window.location.href` is set correctly.
+
+17. Error: Result box not updating.
+    - Description: The translated text is not displayed in the result box.
+    - How to fix: Ensure the `resultElement.innerHTML` is updated with the translated text.
+
+18. Error: Unsupported language selected.
+    - Description: The user selected a language that is not supported or disabled.
+    - How to fix: Disable unsupported languages in the dropdown menu or provide a proper error message.
+
+19. Error: JSON file contains unexpected keys.
+    - Description: The JSON file contains keys that are not recognized by the application.
+    - How to fix: Ensure the JSON file only contains `combos`, `letters`, and `suffixes` objects.
+
+20. Error: JSON file is empty.
+    - Description: The JSON file exists but does not contain any data.
+    - How to fix: Populate the JSON file with valid translation data.
+
+21. Error: Browser compatibility issue.
+    - Description: The application does not work correctly in certain browsers.
+    - How to fix: Test the application in multiple browsers and ensure compatibility with modern standards.
+
+22. Error: Network request blocked by CORS policy.
+    - Description: The browser blocked the request due to Cross-Origin Resource Sharing (CORS) restrictions.
+    - How to fix: Configure the server to allow CORS or run the application on the same origin as the server.
+
+23. Error: Invalid dropdown selection.
+    - Description: The user selected an invalid or empty option from the dropdown menu.
+    - How to fix: Ensure the dropdown menu has valid options and a default selection.
