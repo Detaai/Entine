@@ -6,7 +6,7 @@
     <title>Entine Calculator</title>
     <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
     <style>
-        /* Inline styles for quick improvements */
+        /* General Styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -19,18 +19,18 @@
         header {
             background: #4CAF50;
             color: white;
-            padding: 1rem 0;
+            padding: 1.5rem 0;
             text-align: center;
         }
 
         header h1 {
             margin: 0;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
         }
 
         .start-button {
             display: block;
-            width: 200px;
+            width: 220px;
             margin: 2rem auto;
             padding: 1rem;
             text-align: center;
@@ -50,7 +50,7 @@
 
         main {
             padding: 2rem;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
@@ -65,6 +65,31 @@
         section h2 {
             color: #4CAF50;
             margin-top: 0;
+        }
+
+        section p {
+            margin-bottom: 1rem;
+        }
+
+        /* Horizontal Layout for Features */
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: space-between;
+        }
+
+        .features li {
+            flex: 1 1 calc(45% - 1rem); /* Adjust width for two items per row */
+            list-style: none;
+            background: #f9f9f9;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .features li strong {
+            color: #4CAF50;
         }
 
         footer {
@@ -97,21 +122,25 @@
     <main>
         <section>
             <h2>What is the Entine Calculator?</h2>
-            <p>The Entine Calculator is a tool designed to help you explore fantasy languages, perform translations, and more!</p>
+            <p>The Entine Calculator is a versatile tool designed to bring your fantasy worlds to life. Whether you're a writer, gamer, or just a fan of fantasy, this tool helps you explore and create with ease.</p>
+            <p>From translating text into fantasy languages to generating unique names and calculating fantasy ages, the Entine Calculator is your ultimate companion for all things creative.</p>
         </section>
 
         <section>
             <h2>Features</h2>
-            <ul>
-                <li>Translate text into fantasy languages like Randeth.</li>
-                <li>Explore unavailable languages like Wander's Language and Merspeak.</li>
-                <li>Learn about the structure and rules of fantasy languages.</li>
+            <ul class="features">
+                <li><strong>Language Translator:</strong> Translate text into fantasy languages like Randeth or explore unavailable languages like Wander's Language and Merspeak.</li>
+                <li><strong>Age Calculator:</strong> Convert human ages into fantasy equivalents for various species, or vice versa.</li>
+                <li><strong>Money Converter:</strong> Convert real-world currencies into fantasy currencies like gold, silver, and copper.</li>
+                <li><strong>Name Generator:</strong> Generate unique names for characters, places, or factions in your fantasy world.</li>
+                <li><strong>Conflict Generator:</strong> Create dynamic conflicts between factions with detailed reasons, outcomes, and battlefields.</li>
             </ul>
         </section>
 
         <section>
             <h2>Get Started</h2>
-            <a href="home-page.html" class="start-button">Begin Converting</a>
+            <p>Ready to dive into the world of fantasy? Click the button below to begin exploring the Entine Calculator's features.</p>
+            <a href="home-page.html" class="start-button">Begin Your Journey</a>
         </section>
     </main>
 
