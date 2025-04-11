@@ -25,6 +25,7 @@ header {
 header h1 {
     color: white;
     margin: 0;
+    font-size: 1.8rem; /* Adjust font size for smaller screens */
 }
 
 header .home-link {
@@ -43,6 +44,8 @@ header .home-link:hover {
     display: flex;
     gap: 20px; /* Space between the two converters */
     margin-top: 20px; /* Add space below the header */
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    justify-content: center; /* Center containers on smaller screens */
 }
 
 /* Footer Styles */
@@ -61,6 +64,8 @@ main {
     align-items: center;
     background-color: #fdfdfd; /* Off-white background */
     padding: 20px;
+    width: 100%; /* Ensure it spans the full width on smaller screens */
+    box-sizing: border-box;
 }
 
 /* Container Styles */
@@ -71,10 +76,10 @@ main {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     width: 400px;
     text-align: center;
+    box-sizing: border-box;
 }
 
-/* Heading Styles */
-h1 {
+.container h1 {
     font-size: 24px;
     color: white;
     margin-bottom: 15px;
@@ -154,4 +159,38 @@ p {
 @font-face {
     font-family: 'Sankofa_Display';
     src: url('./Sankofa_Display.ttf') format('truetype'); /* Ensure the path is correct */
+}
+
+/* Responsive Design for Mobile Devices */
+@media (max-width: 768px) {
+    body {
+        height: auto; /* Allow scrolling on smaller screens */
+    }
+
+    header h1 {
+        font-size: 1.5rem; /* Smaller font size for header */
+    }
+
+    .container {
+        width: 90%; /* Make containers take up most of the screen width */
+        padding: 15px; /* Reduce padding */
+    }
+
+    .container-wrapper {
+        flex-direction: column; /* Stack containers vertically */
+        gap: 15px; /* Reduce gap between containers */
+    }
+
+    button {
+        font-size: 14px; /* Smaller button font size */
+        padding: 8px 16px; /* Adjust padding */
+    }
+
+    textarea {
+        height: 80px; /* Reduce height for smaller screens */
+    }
+
+    #output {
+        font-size: 18px; /* Adjust font size for output */
+    }
 }
