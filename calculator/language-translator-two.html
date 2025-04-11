@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reverse Fantasy Language Translator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="reverse-translator.js" defer></script> <!-- Reverse Translator logic -->
+    <style>
+        /* Add styles for the scrollable result box */
+        .result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            max-height: 200px; /* Set a fixed height */
+            overflow-y: auto; /* Enable vertical scrolling */
+            font-family: Arial, sans-serif;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        /* Style for the Swap button */
+        .swap-button {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .swap-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="home-page.html" class="home-link">&larr; Back to Home</a>
+    </header>
+    
+    <div class="container">
+        <h1>Reverse Fantasy Language Translator</h1>
+        
+        <label for="fantasy-type">Choose Reverse Language:</label>
+        <select id="fantasy-type">
+            <option value="randeth-to-english">Randeth to English</option>
+            <option value="wander-to-english" disabled>Wander's Language to English (Unavailable)</option>
+            <option value="merspeak-to-english" disabled>Merspeak to English (Unavailable)</option>
+            <option value="deepspeech-to-english" disabled>Deepspeech to English (Forbidden)</option>
+            <option value="dwarvish-to-english" disabled>Dwarvish to English (Forbidden)</option>
+        </select>
+        
+        <label for="text">Enter Text:</label>
+        <input type="text" id="text" placeholder="Enter words to reverse translate">
+        
+        <button onclick="reverseTranslateText()">Translate</button>
+        
+        <div class="result" id="result"></div>
+
+        <!-- Swap Button -->
+        <button class="swap-button" onclick="swapToFirstTranslator()">Swap</button>
+    </div>
+
+    <script>
+        // Function to swap back to the first translator
+        function swapToFirstTranslator() {
+            window.location.href = "language-translator.html"; // Redirect to the first translator
+        }
+    </script>
+</body>
+</html>
