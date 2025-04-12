@@ -20,6 +20,7 @@ header {
     background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
     padding: 10px 0;
     text-align: center;
+    border-bottom: 5px solid #4CAF50; /* Add a hard border at the bottom of the header */
 }
 
 header h1 {
@@ -50,10 +51,12 @@ header .home-link:hover {
 
 /* Footer Styles */
 footer {
+    width: 100%;
     background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
     color: rgb(255, 255, 255);
     text-align: center;
     padding: 10px 0;
+    border-top: 5px solid #4CAF50; /* Add a hard border at the top of the footer */
 }
 
 /* Main Content Styles */
@@ -70,7 +73,7 @@ main {
 
 /* Container Styles */
 .container {
-    background-color: transparent; /* Remove the semi-transparent black background */
+    background-color: rgb(36, 54, 39); /* Remove the semi-transparent black background */
     padding: 20px;
     border-radius: 8px;
     box-shadow: none; /* Remove the shadow */
@@ -193,4 +196,22 @@ p {
     #output {
         font-size: 18px; /* Adjust font size for output */
     }
+}
+
+/* Cast Member Button Styles */
+.cast-member button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    background-image: url('images/nameplate.jpg'); /* Background image for nameplate */
+    background-size: cover; /* Ensure the image covers the button */
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px black; /* Add a shadow for better readability */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
 }
