@@ -23,13 +23,13 @@ header {
 }
 
 header h1 {
-    color: white;
+    color: rgb(255, 255, 255);
     margin: 0;
     font-size: 1.8rem; /* Adjust font size for smaller screens */
 }
 
 header .home-link {
-    color: white;
+    color: rgb(255, 255, 255);
     text-decoration: none;
     font-size: 16px;
     font-weight: bold;
@@ -51,7 +51,7 @@ header .home-link:hover {
 /* Footer Styles */
 footer {
     background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
-    color: white;
+    color: rgb(255, 255, 255);
     text-align: center;
     padding: 10px 0;
 }
@@ -62,18 +62,18 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #fdfdfd; /* Off-white background */
     padding: 20px;
     width: 100%; /* Ensure it spans the full width on smaller screens */
     box-sizing: border-box;
+    background-color: transparent; /* Remove the white background */
 }
 
 /* Container Styles */
 .container {
-    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+    background-color: transparent; /* Remove the semi-transparent black background */
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    box-shadow: none; /* Remove the shadow */
     width: 400px;
     text-align: center;
     box-sizing: border-box;
