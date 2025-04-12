@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Cast</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Enable scrolling for the entire page */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        /* Section titles */
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        /* Parent container for Main Cast section */
+        .cast-sections {
+            display: flex;
+            flex-direction: column; /* Stack sections vertically */
+            align-items: center; /* Center sections horizontally */
+            gap: 50px; /* Add spacing between sections */
+            padding: 20px;
+        }
+
+        /* Cast container styles */
+        .cast-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        /* Individual cast member card */
+        .cast-member {
+            text-align: center;
+            width: 150px;
+        }
+
+        .cast-member img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%; /* Circular profile picture */
+            object-fit: cover;
+            border: 2px solid #4CAF50; /* Optional border */
+            cursor: pointer; /* Make the image look clickable */
+            transition: transform 0.3s; /* Add a hover effect */
+        }
+
+        .cast-member img:hover {
+            transform: scale(1.1); /* Slight zoom effect on hover */
+        }
+
+        /* Button styles for Main Cast */
+        .cast-member button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            background-image: url('nameplate.jpg'); /* Background image for nameplate */
+            background-size: cover; /* Ensure the image covers the button */
+            background-repeat: no-repeat;
+            background-position: center;
+            color: rgba(255, 255, 255, 0.635);
+            font-weight: bold;
+            text-shadow: 1px 1px 2px black; /* Add a shadow for better readability */
+            cursor: pointer;
+            transition: transform 0.3s; /* Add hover effect */
+        }
+
+        .cast-member button:hover {
+            transform: scale(1.05); /* Slight zoom effect on hover */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="home-page.html" class="home-link">← Back to Home</a>
+        <h1>The Cast</h1>
+    </header>
+    <main>
+        <!-- Parent container for Main Cast section -->
+        <div class="cast-sections">
+            <!-- Main Cast Section -->
+            <section>
+                <h2>Main Cast</h2>
+                <div class="cast-container">
+                    <div class="cast-member">
+                        <img src="images/cast1.jpg" alt="Main Cast Member 1" onclick="location.href='cast-member1.html'">
+                        <button onclick="location.href='cast-member1.html'">Dete</button>
+                    </div>
+                    <div class="cast-member">
+                        <img src="images/cast2.jpg" alt="Main Cast Member 2" onclick="location.href='cast-member2.html'">
+                        <button onclick="location.href='cast-member2.html'">Gwen</button>
+                    </div>
+                    <div class="cast-member">
+                        <img src="images/cast3.jpg" alt="Main Cast Member 3" onclick="location.href='cast-member3.html'">
+                        <button onclick="location.href='cast-member3.html'">Beans</button>
+                    </div>
+                    <div class="cast-member">
+                        <img src="images/cast4.jpg" alt="Main Cast Member 4" onclick="location.href='cast-member4.html'">
+                        <button onclick="location.href='cast-member4.html'">Bluma</button>
+                    </div>
+                    <div class="cast-member">
+                        <img src="images/cast5.jpg" alt="Main Cast Member 5" onclick="location.href='cast-member5.html'">
+                        <button onclick="location.href='cast-member5.html'">Rinn</button>
+                    </div>
+                    <div class="cast-member">
+                        <img src="images/cast6.jpg" alt="Main Cast Member 6" onclick="location.href='cast-member6.html'">
+                        <button onclick="location.href='cast-member6.html'">Tach'guf</button>
+                </div>
+                    <div class="cast-member">
+                        <img src="images/cast7.jpg" alt="Main Cast Member 7" onclick="location.href='cast-member7.html'">
+                        <button onclick="location.href='cast-member7.html'">Fallen One</button>
+                    </div>
+                    <div class="cast-member">
+                        <img src="images/cast8.jpg" alt="Main Cast Member 8" onclick="location.href='cast-member8.html'">
+                        <button onclick="location.href='cast-member8.html'">Godess</button>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Entine Calculator</p>
+    </footer>
+</body>
+</html>
