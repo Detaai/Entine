@@ -145,20 +145,20 @@
                 return;
             }
 
-            // Convert to USD
+            // Convert the entered amount to USD
             const usd = amount / currencyRate;
 
             // Conversion to fantasy currency
-            const totalCopper = Math.floor(usd * 100); // 1 USD = 100 copper
-            const gold = Math.floor(totalCopper / 10000); // 100 silver = 1 gold
+            const totalCopper = Math.round(usd * 100); // 1 USD = 100 copper
+            const gold = Math.floor(totalCopper / 10000); // 1 gold = 10,000 copper
             const remainingCopperAfterGold = totalCopper % 10000;
-            const silver = Math.floor(remainingCopperAfterGold / 100); // 100 copper = 1 silver
-            const copper = remainingCopperAfterGold % 100;
+            const silver = Math.floor(remainingCopperAfterGold / 100); // 1 silver = 100 copper
+            const copper = remainingCopperAfterGold % 100; // Remaining copper
 
-            // Animate the results
-            animateNumber(goldResult, 0, gold, 1000); // Animate gold
-            animateNumber(silverResult, 0, silver, 1000); // Animate silver
-            animateNumber(copperResult, 0, copper, 1000); // Animate copper
+            // Update the results
+            goldResult.textContent = gold;
+            silverResult.textContent = silver;
+            copperResult.textContent = copper;
         }
 
         function convertFantasyToReal() {
